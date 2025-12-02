@@ -4,15 +4,19 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
+
+// to make sure builds for docker "GOOS=linux GOARCH=amd64 go build"
 
 func main() {
 	m := http.NewServeMux()
 
 	m.HandleFunc("/", handlePage)
 
-	const port = "8010"
+	port := os.Getenv("PORT")
+
 	srv := http.Server{
 		Handler:      m,
 		Addr:         ":" + port,
